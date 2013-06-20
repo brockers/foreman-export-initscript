@@ -34,8 +34,8 @@ class Foreman::Export::Initscript < Foreman::Export::Base
 #    write_template "initscript/master.erb", "#{app}", binding
   end
 
-  def loc
-    options[:loc] || engine.root
+  def app_path
+    options[:app_path] || engine.root
   end
 
 end
