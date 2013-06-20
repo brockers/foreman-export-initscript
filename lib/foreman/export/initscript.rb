@@ -23,11 +23,20 @@ class Foreman::Export::Initscript < Foreman::Export::Base
     matchers << File.expand_path("../../../../data/export/#{name}", __FILE__)
     path = File.read(matchers.detect { |m| File.exists?(m) })
     compiled = ERB.new(path).result(binding)
-    write_file "#{app}", compiled
-    FileUtils.chmod(755, "#{app}")
+
+    if location == "-"
+      puts compiled
+    else
+      write_file "#{app}", compiled
+      FileUtils.chmod(755, "#{app}")
+    end
 #    path = export_template name
 #    write_template "initscript/master.erb", "#{app}", binding
-   end
+  end
+
+  def loc
+    options[:loc] || engine.root
+  end
 
 end
 
